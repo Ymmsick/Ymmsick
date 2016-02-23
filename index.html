@@ -114,6 +114,8 @@
         		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
             	<ul class="sb-submenu">
 				  	
+				    <li><a href="/categories/Android/" class="animsition-link">Android<small>(1)</small></a></li>
+				    
 				    <li><a href="/categories/Films/" class="animsition-link">Films<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/Game/" class="animsition-link">Game<small>(1)</small></a></li>
@@ -123,6 +125,8 @@
 				    <li><a href="/categories/Hexo/" class="animsition-link">Hexo<small>(2)</small></a></li>
 				    
 				    <li><a href="/categories/Life/" class="animsition-link">Life<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/iOS/" class="animsition-link">iOS<small>(2)</small></a></li>
 				    
 				</ul>
         	</li>
@@ -244,6 +248,76 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
                 <div class="col-md-4">
+                    <h3><a href="/2016/02/23/android-drawable和mipmap的区别/">android drawable和mipmap的区别</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2016-02-23T08:57:02.000Z" itemprop="datePublished">
+          2016-02-23
+      </time>
+    
+    
+    | 
+    <a href='/tags/android-drawable-mipmap/'>android,drawable,mipmap</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        以前被坑了，好多人都说新版本的sdk中图片资源放在mipmap中会有优化，官方原话是这样的：
+
+drawable-/Directories for drawable resources, other than launcher icons, designed for various densities.
+mipmap/Launcher icons reside in the mipmap/ folder rather than the 
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2016/02/23/android-drawable和mipmap的区别/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2015/08/10/为什么-iOS-开发中，控件一般为-weak-而不是-strong？/">为什么 iOS 开发中，控件一般为 weak 而不是 strong？</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2015-08-10T15:42:38.000Z" itemprop="datePublished">
+          2015-08-10
+      </time>
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        参考自：http://www.zhihu.com/question/29927614?sort=created
+因为控件他爹( view.superview )已经揪着它的小辫了( strong reference )，你( viewController )眼瞅着( weak reference )就好了。
+当然，如果你想在 view 从 superview 里面 remove 掉之后还继续持有的话，还是要用 strong 的( 你也揪
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2015/08/10/为什么-iOS-开发中，控件一般为-weak-而不是-strong？/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
                     <h3><a href="/2015/07/30/如何评价《煎饼侠》？/">如何评价《煎饼侠》？</a></h3>
                     <span>
                         <span class="post-meta">
@@ -266,6 +340,43 @@
                     
                     <p class="pull-right readMore">
                         <a href="/2015/07/30/如何评价《煎饼侠》？/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2015/07/28/转：-Xcode提示“expression-is-not-assignable”/">转： Xcode提示“expression is not assignable”</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2015-07-28T14:46:54.000Z" itemprop="datePublished">
+          2015-07-28
+      </time>
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        你的问题是：
+
+self.view.frame.size.height = 100f;
+这样写没法通过编译，编译器会报错"expression is not assignable"
+
+原因是，这句话里面的几个点有两种不同的含义。self.view.frame是Objective-C语法，是读取view属性的frame属性，在Objective-C中使用点来访问属性只是一种语法糖，所以self.view.frame这句话会被转换成：
+
+[
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2015/07/28/转：-Xcode提示“expression-is-not-assignable”/">Read More...</a>
                     </p>
                     
                 </div>
