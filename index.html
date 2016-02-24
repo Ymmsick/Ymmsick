@@ -126,6 +126,8 @@
 				    
 				    <li><a href="/categories/Life/" class="animsition-link">Life<small>(1)</small></a></li>
 				    
+				    <li><a href="/categories/MySql/" class="animsition-link">MySql<small>(1)</small></a></li>
+				    
 				    <li><a href="/categories/iOS/" class="animsition-link">iOS<small>(2)</small></a></li>
 				    
 				</ul>
@@ -244,6 +246,44 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2016/02/24/mysql单表多timestamp报错-1293-Incorrect-table-definition-there-can-be-only-one-TIMESTAMP-column-with-C/">mysql单表多timestamp报错#1293 - Incorrect table definition; there can be only one TIMESTAMP column with C</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2016-02-24T08:45:57.000Z" itemprop="datePublished">
+          2016-02-24
+      </time>
+    
+    
+    | 
+    <a href='/tags/mysql-1293/'>mysql,1293</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        今天在用SqlYog导入sql备份文件的时候又遇到了错误，而且不是往常修改配置文件的错误，点击打开错误文件，alway crashed！！！猜测应该是微软记事本太渣的原因，于是转到sqlyog安装目录，用submit打开错误文件，拉到最下面找到错误，根据提示定位到sql文件中的行数，原来是mysql单表多timestamp报错。
+一个表中出现多个timestamp并设置其中一个为current_timestamp的时候经常会遇到
+
+_#
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2016/02/24/mysql单表多timestamp报错-1293-Incorrect-table-definition-there-can-be-only-one-TIMESTAMP-column-with-C/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -553,39 +593,9 @@ Please, commit your changes or stash them before you
             </div>
         </div>
         
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2015/07/26/Hello/">Hello</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2015-07-26T06:49:04.000Z" itemprop="datePublished">
-          2015-07-26
-      </time>
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2015/07/26/Hello/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
         <nav class="pagination" role="pagination">
           
-          
+          <a class="pull-right" href="/page/2/">Older Posts →</a>
         </nav>
     </div>
 </section>
