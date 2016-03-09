@@ -17,7 +17,7 @@
 <!--<![endif]-->
 
 <head>
-  <title>Hello | Ymmmsick</title>
+  <title>Fragment通信的那点事(Communicating with Fragments) | Ymmmsick</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -248,30 +248,106 @@
         <div class="row col-md-offset-2">
             <div class="col-md-8">
     			<span class="post-meta">
-      <time datetime="2015-07-26T06:49:04.000Z" itemprop="datePublished">
-          2015-07-26
+      <time datetime="2016-03-09T09:01:47.000Z" itemprop="datePublished">
+          2016-03-09
       </time>
     
+    
+    | 
+    <a href='/tags/Fragments通信-Fragment-communicating/'>Fragments通信,Fragment communicating</a>
+    
+    
 </span>
-                <h1>Hello</h1>
+                <h1>Fragment通信的那点事(Communicating with Fragments)</h1>
             </div>
         </div>
         <div class="col-md-8 col-md-offset-2">
-      		
+      		<p>Fragment通信情况分为两种：</p>
+<p>1.处于同一Activity中的Fragment通信，经典的例如Activity+ViewPager+Fragment</p>
+<p>2.处于非同一Activity中的两个Fragment或一个Activity中的Fragment与另外的Activity通信</p>
+<p>因为第二种较为简单，这里先说一说第二种个人解决方案，第二种直接采用receiver广播机制来通信（发送参数，更新界面等）</p>
+<p>遇到第一种情况虽然也可以使用receiver广播来解决，但是广播机制肯定会涉及到线程开销的，所以从性能着想，采用google官方推荐的接口通信。</p>
+<p><b>定义一个接口</b></p>
+<p>为了让一个Fragment传达到它的Activity，可以在Fragment内部定义一个接口让Activity来实现。该Fragment的onAttach（）方法的生命周期过程中捕获接口实现，然后就可以调用接口的方法，以便与Activity进行沟通。</p>
+<p>这里是Fragment与Activity通信的例子：</p>
+<pre><code><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HeadlinesFragment</span> <span class="keyword">extends</span> <span class="title">ListFragment</span> </span>{
+OnHeadlineSelectedListener mCallback;
+
+<span class="comment">// Container Activity must implement this interface</span>
+<span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">OnHeadlineSelectedListener</span> </span>{
+    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onArticleSelected</span><span class="params">(<span class="keyword">int</span> position)</span></span>;
+}
+
+<span class="annotation">@Override</span>
+<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onAttach</span><span class="params">(Activity activity)</span> </span>{
+    <span class="keyword">super</span>.onAttach(activity);
+
+    <span class="comment">// This makes sure that the container activity has implemented</span>
+    <span class="comment">// the callback interface. If not, it throws an exception</span>
+    <span class="keyword">try</span> {
+        mCallback = (OnHeadlineSelectedListener) activity;
+        } <span class="keyword">catch</span> (ClassCastException e) {
+            <span class="keyword">throw</span> <span class="keyword">new</span> ClassCastException(activity.toString()
+                + <span class="string">" must implement OnHeadlineSelectedListener"</span>);
+        }
+    }
+
+...
+}
+</code></pre><p>从代码中可以看出Fragment捕获了Activity的接口实现，这是第一个Fragment已经完成了该有的通信操作，接下来应该由Activity将接受到的数据传递给另外一个Fragment了</p>
+<pre><code>public static <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword"><span class="keyword">extends</span></span> <span class="title">Activity</span>
+</span>    implements <span class="type">HeadlinesFragment</span>.<span class="type">OnHeadlineSelectedListener</span>{
+...
+
+public void onArticleSelected(int position) {
+    <span class="comment">// The user selected the headline of an article from the HeadlinesFragment</span>
+    <span class="comment">// Do something here to display that article</span>
+
+    <span class="type">ArticleFragment</span> articleFrag = (<span class="type">ArticleFragment</span>)
+            getSupportFragmentManager().findFragmentById(<span class="type">R</span>.id.article_fragment);
+
+    <span class="keyword">if</span> (articleFrag != <span class="literal">null</span>) {
+        <span class="comment">// If article frag is available, we're in two-pane layout...</span>
+
+        <span class="comment">// Call a method in the ArticleFragment to update its content</span>
+        articleFrag.updateArticleView(position);
+    } <span class="keyword">else</span> {
+        <span class="comment">// Otherwise, we're in the one-pane layout and must swap frags...</span>
+
+        <span class="comment">// Create fragment and give it an argument for the selected article</span>
+        <span class="type">ArticleFragment</span> newFragment = <span class="keyword">new</span> <span class="type">ArticleFragment</span>();
+        <span class="type">Bundle</span> args = <span class="keyword">new</span> <span class="type">Bundle</span>();
+        args.putInt(<span class="type">ArticleFragment</span>.<span class="type">ARG_POSITION</span>, position);
+        newFragment.setArguments(args);
+
+        <span class="type">FragmentTransaction</span> transaction = getSupportFragmentManager().beginTransaction();
+
+        <span class="comment">// Replace whatever is in the fragment_container view with this fragment,</span>
+        <span class="comment">// and add the transaction to the back stack so the user can navigate back</span>
+        transaction.replace(<span class="type">R</span>.id.fragment_container, newFragment);
+        transaction.addToBackStack(<span class="literal">null</span>);
+
+        <span class="comment">// Commit the transaction</span>
+        transaction.commit();
+        }
+    }
+}
+</code></pre><p>通过上面的例子，展示了Fragment与Fragment之间用接口来实现通信的功能，以后不能滥用广播了~~~</p>
+
             <div class="clearfix"></div>
             <hr class="nogutter">
         </div>
         <nav class="pagination" role="pagination">
     
-    <a class="pull-left" href="/2015/07/26/【git】error-Your-local-changes-to-the-following-files/" style="float: left;">
-        ← 【git】error: Your local changes to the following files
-    </a>
     
+    <a class="pull-right" href="/2016/03/04/如何创建一个没有启动图标的android应用/">
+        如何创建一个没有启动图标的android应用 →
+    </a>
     
 </nav>
 
         <div class="duoshuo">
-<div class="ds-thread" data-thread-key="2015/07/26/Hello/" data-title="Hello" data-url="http://ymmsick.com/2015/07/26/Hello/"></div>
+<div class="ds-thread" data-thread-key="2016/03/09/Fragment与Fragment如何通信-Communicating-with-Other-Fragments/" data-title="Fragment通信的那点事(Communicating with Fragments)" data-url="http://ymmsick.com/2016/03/09/Fragment与Fragment如何通信-Communicating-with-Other-Fragments/"></div>
 <script type="text/javascript">
 var duoshuoQuery = {short_name:"ymmsick"};
 (function() {
